@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+g++ ../src/main.cpp
+touch stdinForTest
+touch resultData
+exec 1> resultData
+
+for var in $(cat testData); do
+	echo $var > stdinForTest
+	exec 0< stdinForTest
+	echo $var
+	./a.out 
+done
+
+
+
