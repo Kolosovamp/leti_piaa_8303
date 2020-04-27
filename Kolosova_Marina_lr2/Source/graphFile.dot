@@ -1,0 +1,3 @@
+digraph MyGraph {
+    a -> e [label=10.00];
+}
