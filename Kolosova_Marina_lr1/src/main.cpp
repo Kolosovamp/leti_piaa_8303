@@ -205,9 +205,11 @@ void backTracking(int x, int y, int size, int color, int& K){
     }
 
     if (x >= N){//некуда больше идти и все квадраты вставлены
-
+	
         if(color - 1 < K){
-            K = color - 1;
+            cout<<"Найдено решение:"<<endl;
+	    printTable();
+	    K = color - 1;
             coord.clear();
 
             for(int i = 1; i <= K; i++){
@@ -230,6 +232,7 @@ void backTracking(int x, int y, int size, int color, int& K){
             }
         }
         size--;//не удалось вставить, потому что слишком большой размер
+	cout<<"Уменьшаем размер обрезка до "<<size<<endl;
 
     }
 
