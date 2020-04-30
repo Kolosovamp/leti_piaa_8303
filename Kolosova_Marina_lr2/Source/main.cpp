@@ -32,8 +32,6 @@ public:
 
 };
 
-
-
 bool cmp(const Edge &a, const Edge &b);
 bool cmpPriority(pair <char, double> a, pair <char, double> b);
 bool cmpForOpenset(pair<char, double> a, pair<char, double> b);
@@ -43,14 +41,22 @@ void reconstructPath(map <char, char> vertexMap, char startVertex, char finalVer
 double heuristicFunction(char curVertex, char finalVertex);//эвристическая функция
 void printPath(vector<char> path);
 
-int main()
+int main(int argc, char* argv[])
 {
+    if(argc > 1)
+        return  0;
     string input;
     vector <Edge> graph;
     char startVertex, finalVertex;//переменная для хранения максимальной вершины
     ofstream out;
-    out.open("/home/marina/Документы/piaa_2/graphFile.dot");//очищает файл, если в нем остались данные с предыдущего вызова
-    out.open("/home/marina/Документы/piaa_2/graphFile.dot", ofstream::app);
+    char *curDir = new char[200];
+    ifstream dir;
+    dir.open("path");
+    dir>>curDir;
+    strcat(curDir, "/Source/graphFile.dot");
+    out.open(curDir);
+    out.open(curDir, ofstream::app);
+    
     out.clear();
     out.write("digraph MyGraph {\n", 18);
     getline(cin, input);
