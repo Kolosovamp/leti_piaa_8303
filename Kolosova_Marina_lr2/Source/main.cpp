@@ -70,11 +70,9 @@ int main(int argc, char* argv[])
    cout<<endl;
 
    cout<<"В таком виде граф хранится в памяти:"<<endl;
-   vector <Edge>::iterator graphIt;
-   for(graphIt = graph.begin(); graphIt != graph.end(); graphIt++){
-       cout<<graphIt->name.first<<" "<<graphIt->name.second<<" "<<graphIt->lenght<<endl;
-
-       out<<"    "<<graphIt->name.first<<" -> "<<graphIt->name.second<<" [label="<<graphIt->lenght<<"];\n";
+   for(auto graphIt : graph){
+       cout<<graphIt.name.first<<" "<<graphIt.name.second<<" "<<graphIt.lenght<<endl;
+       out<<"    "<<graphIt.name.first<<" -> "<<graphIt.name.second<<" [label="<<graphIt.lenght<<"];\n";
    }
    out<<"}\n";
    
