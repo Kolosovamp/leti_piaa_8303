@@ -17,7 +17,8 @@ int main(){
 	strcat(mydir, "/Source/graphFile.dot");
 	strcat(command, mydir);
 	system(command);
-	//system("dot -Tpng -oPIC /home/marina/Документы/piaa_2/Source/graphFile.dot");
 	system("xdg-open PIC");
+	delete [] mydir;
+	delete [] command;
 	return 0;
 }

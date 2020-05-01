@@ -74,22 +74,10 @@ int main(int argc, char* argv[])
    for(graphIt = graph.begin(); graphIt != graph.end(); graphIt++){
        cout<<graphIt->name.first<<" "<<graphIt->name.second<<" "<<graphIt->lenght<<endl;
 
-       char *newStr = new char[50];
-       strcat(newStr, "    ");
-       newStr[4] = graphIt->name.first;
-       newStr[5] = '\0';
-       strcat(newStr, " -> ");
-       newStr[9] = graphIt->name.second;
-       newStr[10] = '\0';
-       strcat(newStr, " [label=");
-       sprintf(newStr+18, "%f", graphIt->lenght);
-       newStr[23] = '\0';
-       strcat(newStr, "];\n");
-
-       out.write(newStr, strlen(newStr));
+       out<<"    "<<graphIt->name.first<<" -> "<<graphIt->name.second<<" [label="<<graphIt->lenght<<"];\n";
    }
-   out.write("}\n", 2);
-
+   out<<"}\n";
+   
 
    findPathWithAStar(startVertex, finalVertex, graph);
    //findPath(startVertex, finalVertex, graph);
@@ -268,8 +256,8 @@ bool cmpForOpenset(pair<char, double> a, pair<char, double> b){//сравнен�
 }
 
 void printPath(vector<char> path){
-    for(auto it = path.begin(); it != path.end(); it++){
-        cout<<*it;
+    for(const auto &elem : path){
+        cout<<elem;
     }
     cout<<endl;
 }
