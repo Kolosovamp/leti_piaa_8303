@@ -58,7 +58,8 @@ int main(int argc, char* argv[])
     out.open(curDir, ofstream::app);
     
     out.clear();
-    out.write("digraph MyGraph {\n", 18);
+    
+    out<<"digraph MyGraph {\n";
     getline(cin, input);
     startVertex = input[0];
     finalVertex = input[2];
@@ -81,7 +82,7 @@ int main(int argc, char* argv[])
    //findPath(startVertex, finalVertex, graph);
 
    system("g++ ./Source/visualization.cpp -o showGraph");
-
+   delete [] curDir;
    return 0;
 }
 
