@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//префикс-функция
 void prefixFunc(std::string& p, std::vector<size_t>& pi){
     size_t j = 0;
     pi[0] = 0;
@@ -29,22 +30,27 @@ void prefixFunc(std::string& p, std::vector<size_t>& pi){
 
 }
 
+//КМП-алгоритм
 void KMP(std::string& t, std::string& p, size_t flowCount, bool isForShift = false){
 
     vector<size_t> res;
     vector<size_t> pi (p.size());
     prefixFunc(p, pi);
+    cout << endl;
     cout << "Значение префикс функции для образца:" <<endl;
     for(auto &el : pi){
         cout << el << " ";
     }
     cout << endl <<endl;
+
     size_t j, start, end;
-    cout << "В алгоритме используется максимально возможное количество потоков" << endl;
+    cout << "В алгоритме используется максимально возможное количество потоков." << endl;
     if(t.length() / flowCount < p.length())
 	    flowCount = t.length() / p.length();
+
     for(size_t f = 0; f < flowCount; f++){
-        cout << "Обработка потока №" << f + 1 << endl;
+
+        cout << "Обработка потока №" << f + 1 << ": ";
         j = 0;
         size_t r = t.length() % flowCount;
         size_t flowLen = t.length() / flowCount;
@@ -56,43 +62,69 @@ void KMP(std::string& t, std::string& p, size_t flowCount, bool isForShift = fal
         bool isFound = false;
         if(end > t.size())
             end = t.size();
-        cout << "Строка в текущем потоке: ";
         for(size_t s = start; s < end; s++)
             cout<<t[s];
-        cout<<endl;
-        cout << "Индексы вхождения образца в текущем потоке: ";
-        for(size_t i = start; i < end;){
-            if (t[i] == p[j]){
+        cout << endl << endl;
+
+        for(size_t i = start; i < end;){            
+            for (size_t k = start; k < i; k++) {
+                cout << t[k];
+            }
+            cout << " (" << t[i] << ")";
+            for(size_t k = i + 1; k < end; k++) {
+                cout << t[k];
+            }
+            cout << endl;
+            string shift = "";
+            for(size_t k = 0; k < i - start - j + 1; k++){
+                shift += " ";
+            }
+
+
+            cout << shift;
+            for(size_t k = 0; k < p.size(); k++){
+                if( k == j){
+                    cout << "(" << p[k] << ")";
+                }
+                else cout << p[k];
+            }
+
+            if (t[i] == p[j]) {
+                cout << endl << endl;
                 i++;
                 j++;
                 if(j == p.size()){
-                    cout<<(isFound?",":"")<<i-p.size();
+                    cout << "Найдено вхождение образца" << endl;
+                    cout << "Индекс вхождения: ";
+                    cout << i - p.size() << endl << endl;
                     res.push_back(i - p.size());
                     isFound = true;
-                    if(isForShift){
-                       // res.push_back(i-p.s);
+                    j = pi[j - 1];
+                    if(isForShift) {
                         cout<<endl;
                         break;
-                       // return;
                     }
                 }
             }
             else{
-                if(j == 0){
+                cout << " - символы не совпадают." << endl << endl;
+                if(j == 0) {
                     i++;
                 }
-                else{
+                else {
                     j = pi[j-1];
                 }
             }
         }
         cout<<endl;
-        if(isFound == false && f == flowCount - 1 && res.empty()){
+        if(isFound == false && f == flowCount - 1 && res.empty()) {
+            cout << "Вхождений не найдено" << endl;;
             cout<<-1<<endl;
             return;
         }
     }
-    if(res.empty()){
+    if(res.empty()) {
+        cout << "Вхождений не найдено" <<endl;
         cout<<-1<<endl;
         return;
     }
@@ -108,10 +140,13 @@ void KMP(std::string& t, std::string& p, size_t flowCount, bool isForShift = fal
 }
 
 void cyclicShift(std::string& strA, std::string& strB, size_t flowCount){
+
+    cout << "Строки равны:" << endl;
     if(strA == strB){
         std::cout<<0<<std::endl;
         return;
     }
+    cout << "Строки разного размера:" << endl;
     if(strA.size() != strB.size()){
         std::cout<<-1<<std::endl;
         return;
